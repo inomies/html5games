@@ -7,7 +7,7 @@ pingpong.pressedKeys = [];
 
 pingpong.ball = {
 	diameter: 20,
-	speed: 2,
+	speed: 5,
 	x: 150,
 	y: 100,
 	directionX: 1,
@@ -100,7 +100,7 @@ function moveBall(){
 	var paddleBYBottom = parseInt($Element("paddleB").css("top")) + parseInt($Element("paddleB").css("height"));
 	var paddleBYTop = parseInt($Element("paddleB").css("top"));
 
-	if(ball.x + ball.speed * ball.directionX + ball.diameter >= paddleBX){
+	if(ball.x + ball.speed * ball.directionX + ball.diameter > paddleBX){
 		if(ball.y + ball.speed * ball.directionY <= paddleBYBottom &&
 			ball.y + ball.speed * ball.directionY >= paddleBYTop){
 
