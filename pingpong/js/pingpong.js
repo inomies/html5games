@@ -6,7 +6,7 @@ var pingpong = {
 pingpong.pressedKeys = [];
 
 pingpong.ball = {
-	diameter: 10,
+	diameter: 20,
 	speed: 2,
 	x: 150,
 	y: 100,
@@ -29,18 +29,22 @@ function gameloop(){
 }
 
 function moveBall(){
+	// current position
 	var playgroundHeight = parseInt($Element("playground").height());
 	var playgroundWidth = parseInt($Element("playground").width());
 	var ball = pingpong.ball;
 
+	// check direction on the bottom wall
 	if(ball.y + ball.speed * ball.directionY + ball.diameter > playgroundHeight){
 		ball.directionY = -1;
 	}
 
+	// check direction on the top wall
 	if(ball.y + ball.speed * ball.directionY < 0){
 		ball.directionY = 1;
 	}
 
+	// check direction on the right wall
 	if(ball.x + ball.speed * ball.directionX + ball.diameter > playgroundWidth){
 		pingpong.scoreA++;
 		$Element("scoreA").html(pingpong.scoreA);
@@ -52,8 +56,10 @@ function moveBall(){
 			"top": ball.y
 		});
 		ball.directionX = -1;
+
 	}
 
+	// check direction on the left wall
 	if(ball.x + ball.speed * ball.directionX < 0){
 		pingpong.scoreB++;
 		$Element("scoreB").html(pingpong.scoreB);
@@ -65,11 +71,15 @@ function moveBall(){
 			"top": ball.y
 		});
 		ball.directionX = 1;
+
 	}
 
+	// move the ball
 	ball.x += ball.speed * ball.directionX;
 	ball.y += ball.speed * ball.directionY;
 
+
+	// left paddle
 	var paddleAX = parseInt($Element("paddleA").css("left")) + parseInt($Element("paddleA").css("width"));
 	var paddleAYBottom = parseInt($Element("paddleA").css("top")) + parseInt($Element("paddleA").css("height"));
 	var paddleAYTop = parseInt($Element("paddleA").css("top"));
@@ -77,17 +87,26 @@ function moveBall(){
 	if(ball.x + ball.speed * ball.directionX < paddleAX){
 		if(ball.y + ball.speed * ball.directionY <= paddleAYBottom &&
 			ball.y + ball.speed * ball.directionY >= paddleAYTop){
+
+			console.log("x: " + ball.x + ", y:" + ball.y);
+			console.log("x: " + paddleAX);
+
 			ball.directionX = 1;
 		}
 	}
 
+	// right paddle
 	var paddleBX = parseInt($Element("paddleB").css("left"));
 	var paddleBYBottom = parseInt($Element("paddleB").css("top")) + parseInt($Element("paddleB").css("height"));
 	var paddleBYTop = parseInt($Element("paddleB").css("top"));
 
-	if(ball.x + ball.speed * ball.directionX >= paddleBX){
+	if(ball.x + ball.speed * ball.directionX + ball.diameter >= paddleBX){
 		if(ball.y + ball.speed * ball.directionY <= paddleBYBottom &&
 			ball.y + ball.speed * ball.directionY >= paddleBYTop){
+
+			console.log("x: " + ball.x + ", y:" + ball.y);
+			console.log("x: " + paddleBX);
+
 			ball.directionX = -1;
 		}
 	}
